@@ -27065,6 +27065,40 @@
   }());
 
   /*--------------------------------------------------------------------------*/
+  QUnit.module('lodash.weightedSample');
+
+  (function() {
+    var collection = { 'a': 1, 'b': 2, 'c': 3 };
+
+    QUnit.test('should return a weighted random element', function(assert) {
+      assert.expect(1);
+
+      var actual = _.weightedSample(collection);
+      assert.ok(collection.hasOwnProperty(actual));
+    });
+
+    QUnit.test('should return `undefined` when sampling empty collections', function(assert) {
+      assert.expect(1);
+
+      var expected = lodashStable.map(empties, noop);
+
+      var actual = lodashStable.transform(empties, function(result, value) {
+        try {
+          result.push(_.weightedSample(value));
+        } catch (e) {}
+      });
+
+      assert.deepEqual(actual, expected);
+    });
+
+    QUnit.test('should sample a key from the object based on weights', function(assert) {
+      assert.expect(1);
+
+      var actual = _.weightedSample(collection);
+      assert.ok(collection.hasOwnProperty(actual));
+    });
+  }());
+  /*--------------------------------------------------------------------------*/
 
   QUnit.config.asyncRetries = 10;
   QUnit.config.hidepassed = true;
